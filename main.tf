@@ -8,7 +8,7 @@ resource "aws_instance" "DockerDevBox" {
         Name = "EC2_Instance_Terraform"
     }
 }
-output "public_ip" {
-      value = aws_instance.DockerDevBox.public_ip
+output "public_dns" {
+      value = aws_instance.DockerDevBox.public_dns
       description = "The public IP address of the server"
     }
