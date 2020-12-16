@@ -9,7 +9,3 @@ resource "aws_spot_instance_request" "SpotDockerDevBox" {
         Name = "EC2_Instance_Terraform"
     }
 }
-output "public_dns" {
-      value = aws_spot_instance_request.SpotDockerDevBox.public_dns
-      description = "The public IP address of the server"
-    }
