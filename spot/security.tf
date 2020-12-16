@@ -1,5 +1,5 @@
-resource "aws_security_group" "docker_dev_box" {
-    name = "docker-dev-sg"
+resource "aws_security_group" "spot_docker_dev_box" {
+    name = "docker_dev_spot_sg"
 
     ingress {
         cidr_blocks = [
