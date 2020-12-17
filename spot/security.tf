@@ -1,5 +1,5 @@
 resource "aws_security_group" "spot_docker_dev_box" {
-    name = "docker_dev_spot_sg"
+    name = "spot_docker_dev_box"
 
     ingress {
         cidr_blocks = [
