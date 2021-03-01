@@ -1,14 +1,33 @@
-resource "aws_instance" "DockerDevBox" {
-    ami = "ami-0aef57767f5404a3c"
-    instance_type = "t3.micro"
-    key_name = "terraform_dublin"
-    user_data = file("install_docker.sh")
-    security_groups = [aws_security_group.docker_dev_box.name]
-    tags = {
-        Name = "EC2_Instance_Terraform"
+resource "aws_s3_bucket" "terraform_state" {
+    bucket = "terraform-up-and-running-state"
+
+    # Prevent accidental deletion of this s3 bucket
+    lifecycle {
+      prevent_destroy = true
+    }
+
+    # Enable versioning so we can see the full history of our state files
+    versioning {
+        enabled = true
+    }
+
+    # Enable server-side encryption by default
+    server_side_encryption_configuration {
+        rule {
+            apply_server_side_encryption_by_default {
+                sse_algorith = "AES256"
+            }
+        }
     }
 }
-output "public_dns" {
-      value = aws_instance.DockerDevBox.public_dns
-      description = "The public IP address of the server"
+
+resource "aws_dynamodb_table" "terraform_locks" {
+    name          = "terraforum-up-and-running-locks"
+    billing_mode  = "PAY_PER_REQUEST"
+    hash_key      = "LockID"
+
+    attribute {
+        name = "LockID"
+        type = "S"
     }
+}
